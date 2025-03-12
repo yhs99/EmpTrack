@@ -8,7 +8,7 @@
 
 ## 🛠 기술 스택  
 ### BackEnd
-![image](https://github.com/user-attachments/assets/cba74964-56c4-44ff-a7e3-6ea6c5d9e5c3)
+![image](https://github.com/user-attachments/assets/141eda4f-4c22-4691-a2ad-704a045e5888)
 
 
 ### FrontEnd
