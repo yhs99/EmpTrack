@@ -1,75 +1,27 @@
-# Nuxt Minimal Starter
+# 🏢 근태 관리 자동화 시스템  
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+🚀 기존 수기 방식의 출퇴근 기록을 자동화하기 위해 **카드 리더기와 API 서버를 연동한 근태 관리 시스템**을 개발하였습니다.  
 
-## Setup
+## 🛠 기술 스택  
+- BackEnd
 
-Make sure to install dependencies:
+- FrontEnd
 
-```bash
-# npm
-npm install
+- Auth
 
-# pnpm
-pnpm install
+## 🎯 개발 계기  
+어머니께서 운영하시는 가게에서 아르바이트생의 출퇴근 기록을 **종이에 수기로 작성**하시는 불편함을 보고,  
+이를 **디지털화하여 보다 효율적으로 관리**할 수 있도록 직접 개발하게 되었습니다.  
 
-# yarn
-yarn install
+## 📌 주요 기능  
+1. **카드 ID 수신**  
+   - RFID 리더기가 인식한 **카드 UID를 시리얼 포트**를 통해 읽어옴  
+2. **근태 API 서버와 연동**  
+   - 카드 ID를 JSON 형식의 **Payload**로 변환 후 HTTP 요청(`POST`)  
+3. **직원 정보 검증**  
+   - **DB에는 카드 UID와 직원의 정보(이름, 카드UID, 근로여부)를 저장**
+   - 서버에서 수신한 **카드 UID를 DB의 직원 정보와 매치하여 유효 직원 여부 판단**
+4. **출퇴근 기록 저장**  
+   - 근로 중인 직원의 경우 **DB에 출퇴근 날짜,시각과 함께 저장**
 
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
