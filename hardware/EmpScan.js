@@ -18,6 +18,7 @@ const axios = require('axios');
 const notifier = require('node-notifier');
 let port;
 try {
+  // 테스트용 COM 포트, 추후에 포스기 COM포트 확인 후 수정 필요
   port = new SerialPort({path: 'COM3', baudRate: 9600});
   console.log('RFID 리더기 인식 성공');
 } catch (error) {
@@ -42,9 +43,12 @@ function sendUUIDToServer(uuid) {
         }
     })
     .catch(error => {
-      console.error('출결처리중 오류가 발생했습니다:', error.message);
+        if(error.response.status === 500) {
+            console.error(error.response.data.message);
+        }else {
+            console.error('출결서버에 접속할 수 없습니다. 잠시 후 다시 시도해주세요');
+        }
     });
 }
 
-// To keep the program running
 process.stdin.resume();
