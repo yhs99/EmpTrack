@@ -5,21 +5,26 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.emptrack.empTrack.Repository.EmpTrackAttendanceRepository;
 import com.emptrack.empTrack.Repository.EmpTrackRepository;
 import com.emptrack.empTrack.domain.Attendance;
+import com.emptrack.empTrack.domain.AttendanceType;
 import com.emptrack.empTrack.domain.Employees;
+import com.emptrack.empTrack.dto.AttendanceResponse;
 
 @Service
 public class EmpTrackAttendanceService {
 
-	@Autowired
-	private EmpTrackAttendanceRepository empTrackAttendanceRepository;
-	@Autowired
-	private EmpTrackRepository empTrackRepository;
+	private final EmpTrackAttendanceRepository empTrackAttendanceRepository;
+	private final EmpTrackRepository empTrackRepository;
+	
+	public EmpTrackAttendanceService(EmpTrackAttendanceRepository empTrackAttendanceRepository,
+									 EmpTrackRepository empTrackRepository) {
+		this.empTrackAttendanceRepository = empTrackAttendanceRepository;
+		this.empTrackRepository = empTrackRepository;
+	}
 	
 	public String recordAttendance(String uuid) {
 		LocalDateTime now = LocalDateTime.now();
@@ -37,6 +42,7 @@ public class EmpTrackAttendanceService {
 		if(todayRecords.isEmpty()) {
 			Attendance attendance = new Attendance();
 			attendance.setEmpNo(empNo);
+			attendance.setAttendanceType(AttendanceType.출근);
 			empTrackAttendanceRepository.save(attendance);
 			return "출근 기록이 저장되었습니다.";
 		} else {
@@ -46,11 +52,16 @@ public class EmpTrackAttendanceService {
 			if(lastCheckInTime.plusHours(1).isBefore(now)) {
 				Attendance checkout = new Attendance();
 				checkout.setEmpNo(empNo);
+				checkout.setAttendanceType(AttendanceType.퇴근);
 				empTrackAttendanceRepository.save(checkout);
 				return "퇴근 기록이 저장되었습니다.";
 			}else {
 				return "이미 출근 기록이 있습니다. 한 시간 이후 다시 시도하세요.";
 			}
 		}
+	}
+	
+	public List<AttendanceResponse> searchAttendanceByOptions(String uuid, String name, LocalDateTime startDate, LocalDateTime endDate) {
+		return empTrackAttendanceRepository.searchAttendanceByOptions(uuid, name, startDate, endDate);
 	}
 }
